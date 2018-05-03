@@ -22,7 +22,7 @@ add a, b, c
 
 MIPS 硬性规定，必须是一个操作符后跟三个变量。看下图 MIPS 语法介绍
 
-![2-1](/Users/zhuhonglin/resources/other/computer-organization-and-design/images/2-1.png)
+![2-1](./images/2-1.png)
 
 
 
@@ -91,13 +91,51 @@ addi 是一个新指令，专门用来做立即数的加法。
 
 ## 2.4 Signed and Unsigned Numbers
 
+介绍了一下补码。
+
+计算机需要同时保有正数和负数两种形式，比如内存的地址就是正数，而数字计算会涉及负数。比如 C 语言，会在编码层面就做出区分，如 int 和 unsigned int。
 
 
 
+## 2.5 Representing Instructions in the Computer
+
+MIPS 指令格式：
+
+![2-2](./images/2-2.png)
+
+![2-3](./images/2-3.png)
+
+前一种叫 R-Type，后一种叫做 I-Type。
+
+R-Type 用于寄存器的计算，如
+
+```assembly
+add $t0, $s1, $s2
+```
+
+在 MIPS 里， t0 编号是 8，s1 和 s2 分别是17、18。
+
+所以二进制的指令会变成：
+
+![2-4](./images/2-4.png)
+
+![2-5](./images/2-5.png)
+
+I-Type 涉及立即数或者地址的运算
+
+![2-6](/Users/zhuhonglin/resources/other/computer-organization-and-design/images/2-6.png)
+
+如上图给出的指令格式表。
+
+n.a. 表示这一项不用表示出来。
+
+> 加法和减法的 op 是一样的，我们用 funct 的不同表示加法和减法。
 
 
 
+所有的指令最后都是用数字来表示。
 
 
 
+## 2.6 Logical Operations
 
