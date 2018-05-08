@@ -139,3 +139,108 @@ n.a. 表示这一项不用表示出来。
 
 ## 2.6 Logical Operations
 
+逻辑操作
+
+左移、右移、与、或、非。
+
+首先介绍左移和右移，在 MIPS 中，左移右移叫做 shift left logical (sll) 和 shift right logical (srl)。
+
+```assembly
+sll $t2, $s0, 4		# reg $t2 = reg $s0 << 4 bits
+```
+
+> 左移一位就是乘 2
+
+接着是与或非，比如与
+
+```assembly
+and $t0, $t1, $t2	# reg $t0 = reg $t1 & reg $t2
+```
+
+
+
+
+
+## 2.7 Instructions for Making Decisions
+
+我们将计算机区别于普通计算器的原因在于，计算机不仅可以完成计算，还可以进行判断（做决定）。计算机可以依据不同的输入数据，运行不同的指令。MIPS 支持两种指令，完成 if 语句的操作。
+
+```assembly
+beq register1, register2, L1
+bne register1, register2, L1
+```
+
+beq 指令中，如果 r1 等于 r2，则跳转到 L1 标签处的指令开始执行。
+
+bne 指令中，如果 r1 不等于 r2，则跳转到 L1 标签处的指令开始执行。
+
+比如要完成下列代码
+
+```c
+if (i == j) 
+    f = g + h; 
+else 
+    f = g – h;
+```
+
+```assembly
+    bne $s3, $s4, Else	# go to Else if i ≠ j
+    add $s0, $s1, $s2	# f = g + h (skipped if i ≠ j)
+    j Exit				# go to Exit
+Else: 
+	sub $s0,$s1,$s2 
+Exit:
+```
+
+除了相等和不相等的情况，还常常有不等关系，MIPS 使用一个叫做 set on less than 的指令解决
+
+``` assembly
+slt $t0, $s3, $s4 	# $t0 = 1 if $s3 < $s4
+```
+
+如果 s3 小于 s4，则 t0 赋值为 1，否则为 0。
+
+MIPS 使用 slt，slti（立即数 slt），beq，bne 构建了所有的判断指令。
+
+#### loops
+
+循环指令
+
+```c
+while (save[i] == k) 
+    i += 1;
+```
+
+```assembly
+Loop: 
+    sll $t1, $s3, 2			# Temp reg $t1 = i * 4
+    add $t1, $t1, $s6		# $t1 = address of save[i]
+    lw $t0, 0($t1)			# Temp reg $t0 = save[i]
+    bne $t0, $s5, Exit		# go to Exit if save[i] ≠ k
+    addi $s3, $s3, 1		# i = i + 1
+    j Loop
+Exit:
+```
+
+
+
+## 2.8 Supporting Procedures in Computer Hardware
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
