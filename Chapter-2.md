@@ -274,11 +274,19 @@ jr $ra
 
 ## 2.9 Communicating with People
 
+介绍了一下 ASCII 码
+
+众所周知，单个字符组合起来称为一个字符串，在计算机中有三种方式表示字符串：
+
+1. 字符串的第一个位置给出字符串的长度
+2. 伴随变量给出长度（比如结构体中）
+3. 字符串的最后一个位置特殊字符，标记字符串结束
+
+ 其中 c 使用的第三种做法，字符串的结尾为 0 。java 用了第一种方法。
 
 
- 
 
-
+## 2.10 MIPS Addressing for 32-bit Immediates and Addresses
 
 
 
