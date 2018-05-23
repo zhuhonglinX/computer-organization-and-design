@@ -1,4 +1,5 @@
-[TOC]
+* auto-gen TOC:
+{:toc}
 
 #  Computer Abstractions and Technology
 
