@@ -288,6 +288,70 @@ jr $ra
 
 ## 2.10 MIPS Addressing for 32-bit Immediates and Addresses
 
+MIPS 寻址
+
+通常 MIPS 的指令长度为 32 bit，所以一般使用16 bit 的立即数和地址，但也有一些时候，我们需要使用大立即数和地址，比如32位的立即数。下面介绍一个通用的解决方案。
+
+32位的立即数如何载入寄存器：
+
+```assembly
+# 需要载入的立即数 0000 0000 0011 1101 0000 1001 0000 0000
+lui $s0, 61				# 61 decimal = 0000 0000 0011 1101 binary
+ori $s0, $s0, 2304
+```
+
+MIPS 的做法很简单，分部载入，先载入高16位，在计算入低16位，用到一个指令：load upper immediate
+
+#### Addressing in Branches and Jumps
+
+条件跳转指令和跳转指令
+
+注意的是，首先条件分支跳转指令的最后 16 bit 表示跳转的指令的地址，但 MIPS 考虑到 16 位可以表示的地址太小了，于是使用了 PC 相对寻址（PC-relative addressing），因为大部分条件跳转的目标指令都会在当前指令的附近，所以以 PC 为跳转的基准比较好。即 PC 中的地址加上最后 16 bit 的地址才是最终指令的地址。
+
+同时，由于 MIPS 指令都是四个字节长，所以 MIPS 中，一个字（word）表示四个字节，那么为了最大化可以表示的地址，最后 16 bit 的地址偏移单位是字，而不是字节。（我想到这是不是对齐的原因所在？）
+
+同理，跳转指令也是以字为单位的。但是跳转指令并没有简单的加上 PC，而是使用了一种拼接的方式，这桌寻址方式称为伪直接寻址（Pseudodirect addressing），由于 Jump 指令的后 26 位表示地址，而 PC 为 32 位，所以 MIPS 把 PC 高 4 位和 Jump 的 26 位拼接，形成地址。
+
+
+
+#### MIPS Addressing Mode Summary
+
+寻址模式：
+
+1. 立即数寻址：操作数是常数，包含在指令本身内部。
+2. 寄存器寻址：操作数是寄存器。
+3. 位移寻址：操作数在内存中，通过寄存器和立即数的和计算出目标地址。
+4. PC 相对寻址：如上的条件跳转指令（conditional branch）使用。
+5. 伪直接寻址：如上的跳转指令（Jump）
+
+
+
+书中提到，现在的微处理器包括如今的 MIPS 都有 64 位的扩展。
+
+
+
+#### Decoding Machine Language
+
+这一节讲怎么通过 32 位的二进制还原出 MIPS 的汇编源码。
+
+简单来说就是一步步查表比对。
+
+
+
+
+
+## 2.11 Parallelism and Instructions: Synchronization
+
+
+
+
+
+
+
+
+
+
+
 
 
 
