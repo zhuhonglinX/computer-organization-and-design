@@ -342,6 +342,20 @@ MIPS 的做法很简单，分部载入，先载入高16位，在计算入低16�
 
 ## 2.11 Parallelism and Instructions: Synchronization
 
+并行的指令
+
+为了支持同步操作，MIPS 设置了 load linked 和 store conditional 两个指令，用于对数据读写的原子操作。设置同步指令的目的是希望操作系统级别的程序可以提供完整的库供上层使用。
+
+原子操作的主要逻辑：在读取内存的数据到寄存器中时，加一个锁，直到准备写回到内存中时，解除这个锁定状态。
+
+MIPS 的两条指令，其中 load linked 在读取数据时，会记录数据的地址，当有别的 load linked 指令读取相同地址的信息时，也会记录。但当 store conditional 写回数据的时候，就会判断是不是之前有很多 load，如果没有就成功写入，如果有，就说明数个处理器同时对数据进行处理了，为了不造成数据错误，会放弃这一次写回操作。
+
+
+
+## 2.12 Translating and Starting a Program
+
+
+
 
 
 
